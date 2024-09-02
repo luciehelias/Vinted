@@ -112,7 +112,6 @@ router.get("/offers", async (req, res) => {
         select: "account _id",
       });
 
-    console.log("offer model", Offer);
     if (offers.length === 0) {
       res
         .status(400)
