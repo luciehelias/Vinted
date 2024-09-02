@@ -24,8 +24,6 @@ const offerRouter = require("./Routes/offer");
 
 app.use(userRouter);
 app.use(offerRouter);
-//app.use("/user", useRoutes);
-//permet de faire un raccourci et éviter d'écrire /user dans toutes les routes
 
 app.all("*", (req, res) => {
   return res.status(404).json("Not found");

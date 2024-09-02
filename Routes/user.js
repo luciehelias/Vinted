@@ -6,11 +6,18 @@ const encBase64 = require("crypto-js/enc-base64");
 const router = express.Router();
 
 const User = require("../Models/User");
+const fileUpload = require("express-fileupload");
 
-router.post("/user/signup", async (req, res) => {
+const cloudinary = require("cloudinary").v2;
+
+const convertToBase64 = (file) => {
+  return `data:${file.mimetype};base64,${file.data.toString("base64")}`;
+};
+
+router.post("/user/signup", fileUpload(), async (req, res) => {
   try {
-    const { username, email, password, newsletter, avatar } = req.body;
-    console.log(req.body);
+    const { username, email, password, newsletter } = req.body;
+    console.log(req.files);
 
     if (!username || !email || !password) {
       return res.status(400).json({ message: "Information missing " });
@@ -26,11 +33,15 @@ router.post("/user/signup", async (req, res) => {
       const hash = SHA256(password + salt).toString(encBase64);
       const token = uid2(64);
 
+      const avatar = req.files.avatar;
+
+      const result = await cloudinary.uploader.upload(convertToBase64(avatar));
+
       const newUser = new User({
         email: email,
         account: {
           username: username,
-          avatar: avatar,
+          avatar: result.secure_url,
         },
         newsletter: newsletter,
         token: token,
@@ -71,6 +82,7 @@ router.post("/user/login", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.log(error);
   }
 });
 
