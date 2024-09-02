@@ -33,15 +33,15 @@ router.post("/user/signup", fileUpload(), async (req, res) => {
       const hash = SHA256(password + salt).toString(encBase64);
       const token = uid2(64);
 
-      const avatar = req.files.avatar;
+      // const avatar = req.files.avatar;
 
-      const result = await cloudinary.uploader.upload(convertToBase64(avatar));
+      // const result = await cloudinary.uploader.upload(convertToBase64(avatar));
 
       const newUser = new User({
         email: email,
         account: {
           username: username,
-          avatar: result.secure_url,
+          // avatar: result.secure_url,
         },
         newsletter: newsletter,
         token: token,
@@ -63,7 +63,8 @@ router.post("/user/signup", fileUpload(), async (req, res) => {
 
 router.post("/user/login", async (req, res) => {
   try {
-    const { username, email, password, newsletter, avatar } = req.body;
+    // const { username, email, password, newsletter, avatar } = req.body;
+    const { username, email, password, newsletter } = req.body;
 
     const user = await User.findOne({ email: email });
 
