@@ -13,11 +13,13 @@ app.use(express.json());
 
 router.post("/payment", async (req, res) => {
   try {
-    const { paymentIntent } = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: (req.body.amount * 100).toFixed(0),
       currency: "eur",
       description: `Paiement effectué pour cet article : ${req.body.title}`,
     });
+
+    console.log(paymentIntent);
 
     res.json({ paymentIntent });
   } catch (error) {
