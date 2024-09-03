@@ -19,8 +19,6 @@ router.post("/payment", async (req, res) => {
       description: `Paiement effectué pour cet article : ${req.body.title}`,
     });
 
-    console.log(paymentIntent);
-
     res.json({ paymentIntent });
   } catch (error) {
     console.log(error.message);
