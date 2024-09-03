@@ -21,9 +21,11 @@ mongoose.connect(process.env.MONGODB_URI);
 
 const userRouter = require("./Routes/user");
 const offerRouter = require("./Routes/offer");
+const paymentRouter = require("./Routes/payment");
 
 app.use(userRouter);
 app.use(offerRouter);
+app.use(paymentRouter);
 
 app.all("*", (req, res) => {
   return res.status(404).json("Not found");
