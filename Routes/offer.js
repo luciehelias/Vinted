@@ -86,7 +86,7 @@ router.get("/offers", async (req, res) => {
       };
     }
 
-    const sorts = {};
+    let sorts = {};
 
     if (sort === "price-desc") {
       sorts = { product_price: "desc" };
