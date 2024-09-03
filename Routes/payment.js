@@ -16,7 +16,7 @@ router.post("/payment", async (req, res) => {
     const { paymentIntent } = await stripe.paymentIntents.create({
       amount: (req.body.amount * 100).toFixed(0),
       currency: "eur",
-      description: `Paiement vinted pour : ${req.body.title}`,
+      description: `Paiement effectué pour cet article : ${req.body.title}`,
       source: req.body.token,
     });
 
